@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTubeSEOFree - Complete YouTube SEO Optimization Suite</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-text { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .progress-bar { width: 0%; transition: width 0.5s ease; }
+        .block-card { border: 2px solid #e5e7eb; transition: all 0.3s ease; }
+        .block-card:hover { border-color: #667eea; box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2); }
+        .pulse-animation { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .loading-spinner { border: 3px solid #f3f3f3; border-top: 3px solid #667eea; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .api-status { position: fixed; top: 10px; left: 10px; z-index: 1000; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; }
+        .api-status.online { background: #10B981; color: white; }
+        .api-status.offline { background: #EF4444; color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- API Status Indicator -->
+    <div id="api-status" class="api-status offline">
+        <i class="fas fa-circle"></i> Connecting to AI...
+    </div>
+
+    <!-- Header -->
+    <div class="gradient-bg text-white py-3 text-center">
+        <p class="text-sm font-medium">
+            <i class="fas fa-fire mr-2"></i>
+            95% of YouTubers Fail Because They Don't Know These SEO Secrets - Get Free Access Below
+        </p>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Stop Being Part of the <span class="text-red-400">95%</span> Who Fail
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">
+                The <span class="text-green-400 font-bold">5%</span> Who Succeed Use These 3 Blocks to Dominate YouTube SEO
+            </p>
+            
+            <!-- 3 Block Overview -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white bg-opacity-20 rounded-lg p-6 backdrop-blur-lg">
+                    <div class="text-4xl mb-4"><i class="fas fa-download"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Block 1: Download</h3>
+                    <p class="text-sm opacity-90">Any YouTube Video</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-lg p-6 backdrop-blur-lg">
+                    <div class="text-4xl mb-4"><i class="fas fa-file-alt"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Block 2: Extract</h3>
+                    <p class="text-sm opacity-90">Full Transcript</p>
+                </div>
+                <div class="bg-white bg-opacity-20 rounded-lg p-6 backdrop-blur-lg">
+                    <div class="text-4xl mb-4"><i class="fas fa-magic"></i></div>
+                    <h3 class="font-bold text-lg mb-2">Block 3: Optimize</h3>
+                    <p class="text-sm opacity-90">SEO Content</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="bg-white py-4 border-b">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-medium text-gray-600">Your Progress</span>
+                <span class="text-sm font-medium text-gray-600" id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="progress-bar bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 space-y-8">
+        
+        <!-- Block 1: YouTube Video Downloader -->
+        <div class="block-card bg-white rounded-lg p-6 shadow-lg">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 bg-red-500 text-white rounded-full flex items-center justify-center font-bold mr-4">1</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">YouTube Video Downloader</h2>
+                    <p class="text-gray-600">Most people waste <span class="text-red-500 font-bold">47 minutes</span> finding reliable downloaders. This takes <span class="text-green-500 font-bold">30 seconds</span>.</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">YouTube URL</label>
+                    <div class="relative">
+                        <input type="url" id="video-url" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://www.youtube.com/watch?v=...">
+                        <i class="fas fa-link absolute right-3 top-4 text-gray-400"></i>
+                    </div>
+                    <button onclick="handleVideoDownload()" class="w-full mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200" id="download-btn">
+                        <i class="fas fa-download mr-2"></i>Download Video
+                    </button>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-3">Why <span class="text-red-500">95%</span> Use Sketchy Sites:</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Malware and viruses</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Slow download speeds</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Quality loss</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Annoying ads</li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-green-50 rounded-lg">
+                        <p class="text-green-700 font-medium">
+                            <i class="fas fa-check text-green-500 mr-2"></i>Our tool: Clean, fast, HD quality
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="download-result" class="mt-6 p-4 bg-gray-50 rounded-lg hidden"></div>
+        </div>
+
+        <!-- Block 2: Transcript Extractor -->
+        <div class="block-card bg-white rounded-lg p-6 shadow-lg">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-4">2</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">AI Transcript Extractor</h2>
+                    <p class="text-gray-600">Manual transcription costs <span class="text-red-500 font-bold">$180/hour</span>. Our AI does it in <span class="text-green-500 font-bold">3 seconds</span>.</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Video URL (Same or Different)</label>
+                    <div class="relative">
+                        <input type="url" id="transcript-url" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="https://www.youtube.com/watch?v=...">
+                        <i class="fas fa-link absolute right-3 top-4 text-gray-400"></i>
+                    </div>
+                    <button onclick="handleTranscriptExtraction()" class="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200" id="extract-btn">
+                        <i class="fas fa-file-alt mr-2"></i>Extract Transcript
+                    </button>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-3">The <span class="text-red-500">$180/Hour</span> Problem:</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Professional transcription services</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Manual typing (4-6 hours per video)</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Accuracy issues</li>
+                        <li class="flex items-center"><i class="fas fa-times text-red-500 mr-2"></i>Expensive software subscriptions</li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-blue-700 font-medium">
+                            <i class="fas fa-check text-blue-500 mr-2"></i>Our AI: Instant, accurate & free
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <h4 class="font-bold text-gray-800 mb-2">Extracted Transcript:</h4>
+                <div class="bg-gray-50 rounded-lg p-4 min-h-32">
+                    <textarea id="transcript-result" class="w-full h-32 p-3 border border-gray-200 rounded resize-none" placeholder="Your transcript will appear here..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Block 3: Alex Hormozi SEO Content Master -->
+        <div class="block-card bg-white rounded-lg p-6 shadow-lg">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold mr-4">3</div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Alex Hormozi AI SEO Master</h2>
+                    <p class="text-gray-600">Turn boring content into <span class="text-yellow-500 font-bold">viral gold</span> that <span class="text-red-500 font-bold">95%</span> will never discover.</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Your Transcript (Auto-filled)</label>
+                    <textarea id="content-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent h-32" placeholder="Your transcript will auto-fill here..."></textarea>
+                    
+                    <label class="block text-sm font-medium text-gray-700 mb-2 mt-4">Target Keyword</label>
+                    <input type="text" id="keyword-input" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., YouTube SEO tips">
+                    
+                    <button onclick="handleSEOOptimization()" class="w-full mt-4 bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg transition duration-200" id="optimize-btn">
+                        <i class="fas fa-magic mr-2"></i>Apply Hormozi AI Magic
+                    </button>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-3">The Hormozi AI Method:</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-fire text-orange-500 mr-2 mt-1"></i>
+                            <div><strong>Brutal honesty</strong> that cuts through BS</div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-chart-line text-blue-500 mr-2 mt-1"></i>
+                            <div><strong>95% vs 5%</strong> positioning psychology</div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hashtag text-green-500 mr-2 mt-1"></i>
+                            <div><strong>Specific numbers</strong> for credibility</div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bolt text-yellow-500 mr-2 mt-1"></i>
+                            <div><strong>Contrarian headlines</strong> that stop scrolling</div>
+                        </li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-yellow-700 font-medium text-sm">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Secret: Our AI uses Hormozi's exact psychology patterns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-2">AI-Optimized Title:</h4>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <textarea id="title-result" class="w-full h-16 p-3 border border-gray-200 rounded resize-none" placeholder="Your AI-optimized title will appear here..."></textarea>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-2">AI-Generated Tags:</h4>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <textarea id="tags-result" class="w-full h-20 p-3 border border-gray-200 rounded resize-none" placeholder="Your AI-generated tags will appear here..."></textarea>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-2">AI-Crafted Description:</h4>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <textarea id="description-result" class="w-full h-32 p-3 border border-gray-200 rounded resize-none" placeholder="Your AI-crafted description will appear here..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lead Capture Section -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">Want the Advanced AI System That Creates <span class="text-yellow-300">6-Figure</span> YouTube Channels?</h2>
+            <p class="text-lg mb-6 opacity-90">This free AI tool is just the beginning. Get personalized AI mentorship to build your complete digital empire.</p>
+            
+            <div class="bg-white bg-opacity-20 rounded-lg p-6 max-w-md mx-auto backdrop-blur-lg">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-exclamation-triangle text-yellow-300 mr-2"></i>
+                    <span class="font-bold">Only 73 spots left this month for our AI Mentor Program</span>
+                </div>
+                
+                <!-- HighLevel Form Integration -->
+                <iframe src="https://api.leadconnectorhq.com/widget/form/FFo40qHskU52V7zPUtx5" 
+                        style="width:100%;height:462px;border:none;border-radius:3px" 
+                        id="inline-FFo40qHskU52V7zPUtx5" 
+                        data-layout="{'id':'INLINE'}" 
+                        data-trigger-type="alwaysShow" 
+                        data-trigger-value="" 
+                        data-activation-type="alwaysActivated" 
+                        data-activation-value="" 
+                        data-deactivation-type="neverDeactivate" 
+                        data-deactivation-value="" 
+                        data-form-name="YouTube SEO Lead Capture" 
+                        data-height="462" 
+                        data-layout-iframe-id="inline-FFo40qHskU52V7zPUtx5" 
+                        data-form-id="FFo40qHskU52V7zPUtx5" 
+                        title="YouTube SEO Lead Capture">
+                </iframe>
+                
+                <p class="text-xs mt-4 opacity-75">Your information is 100% secure and will never be shared.</p>
+            </div>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="text-center py-8">
+            <h3 class="text-2xl font-bold mb-6 gradient-text">Join the 5% Who Actually Succeed</h3>
+            <div class="grid md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+                <div>
+                    <div class="text-3xl font-bold text-blue-600">12,847</div>
+                    <div class="text-gray-600">Creators Using Our AI System</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-green-600">847%</div>
+                    <div class="text-gray-600">Average View Increase</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-purple-600">$2.3M</div>
+                    <div class="text-gray-600">Revenue Generated</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // API Configuration
+    const API_BASE_URL = 'https://your-backend-url.herokuapp.com/api'; // Replace with your actual backend URL
+    
+    // Check API Status
+    async function checkAPIStatus() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/health`);
+            const status = document.getElementById('api-status');
+            if (response.ok) {
+                status.className = 'api-status online';
+                status.innerHTML = '<i class="fas fa-circle"></i> AI Online';
+            } else {
+                throw new Error('API offline');
+            }
+        } catch (error) {
+            const status = document.getElementById('api-status');
+            status.className = 'api-status offline';
+            status.innerHTML = '<i class="fas fa-circle"></i> AI Offline';
+        }
+    }
+    
+    // Initialize API check
+    checkAPIStatus();
+    setInterval(checkAPIStatus, 30000); // Check every 30 seconds
+    
+    // Utility Functions
+    function extractVideoId(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+    
+    function updateProgress(percentage) {
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        if (progressBar) {
+            progressBar.style.width = percentage + '%';
+        }
+        if (progressText) {
+            progressText.textContent = percentage + '%';
+        }
+    }
+    
+    function showMessage(message, type = 'info') {
+        const colors = {
+            error: 'bg-red-500',
+            success: 'bg-green-500',
+            info: 'bg-blue-500'
+        };
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `fixed top-20 right-4 z-50 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+        messageDiv.innerHTML = `
+            <div class="flex items-center">
+                <span class="mr-2">${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            messageDiv.classList.remove('translate-x-full');
+        }, 100);
+        
+        setTimeout(() => {
+            messageDiv.classList.add('translate-x-full');
+            setTimeout(() => messageDiv.remove(), 300);
+        }, 5000);
+    }
+    
+    function setButtonLoading(buttonId, isLoading) {
+        const button = document.getElementById(buttonId);
+        if (!button) return;
+        
+        if (isLoading) {
+            button.disabled = true;
+            button.innerHTML = '<div class="loading-spinner mr-2"></div>Processing...';
+        } else {
+            button.disabled = false;
+            // Reset to original content based on button
+            if (buttonId === 'download-btn') {
+                button.innerHTML = '<i class="fas fa-download mr-2"></i>Download Video';
+            } else if (buttonId === 'extract-btn') {
+                button.innerHTML = '<i class="fas fa-file-alt mr-2"></i>Extract Transcript';
+            } else if (buttonId === 'optimize-btn') {
+                button.innerHTML = '<i class="fas fa-magic mr-2"></i>Apply Hormozi AI Magic';
+            }
+        }
+    }
+    
+    // Block 1: Video Download Handler
+    async function handleVideoDownload() {
+        const urlInput = document.getElementById('video-url');
+        const resultDiv = document.getElementById('download-result');
+        
+        if (!urlInput || !urlInput.value.trim()) {
+            showMessage('Please enter a valid YouTube URL', 'error');
+            return;
+        }
+        
+        const videoId = extractVideoId(urlInput.value);
+        if (!videoId) {
+            showMessage('Invalid YouTube URL format', 'error');
+            return;
+        }
+        
+        setButtonLoading('download-btn', true);
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/video-info`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ videoId: videoId })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to get video info');
+            }
+            
+            const videoInfo = await response.json();
+            
+            if (resultDiv) {
+                resultDiv.classList.remove('hidden');
+                resultDiv.innerHTML = `
+                    <h4 class="font-bold text-gray-800 mb-3">🚀 Download Options Ready:</h4>
+                    <div class="bg-white border rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <img src="${videoInfo.thumbnail}" alt="Video thumbnail" class="w-16 h-12 rounded mr-3 object-cover">
+                            <div>
+                                <h5 class="font-semibold text-sm">${videoInfo.title}</h5>
+                                <p class="text-xs text-gray-600">Duration: ${videoInfo.duration} | Views: ${videoInfo.views}</p>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-2">
+                            <button onclick="window.open('https://yt1s.com/en/youtube-to-mp4?q=https://www.youtube.com/watch?v=${videoId}', '_blank')" 
+                                    class="w-full bg-red-500 text-white py-2 px-3 rounded hover:bg-red-600 transition text-sm">
+                                <i class="fas fa-download mr-1"></i>YT1S - MP4 (Recommended)
+                            </button>
+                            <button onclick="window.open('https://yt1s.com/en/youtube-to-mp3?q=https://www.youtube.com/watch?v=${videoId}', '_blank')" 
+                                    class="w-full bg-green-500 text-white py-2 px-3 rounded hover:bg-green-600 transition text-sm">
+                                <i class="fas fa-music mr-1"></i>YT1S - MP3 (Audio)
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-3">
+                            ✅ Safe and fast downloads. Click to open in new tab.
+                        </p>
+                    </div>
+                `;
+            }
+            
+            updateProgress(33);
+            showMessage('🚀 Download options ready!', 'success');
+            
+        } catch (error) {
+            console.error('Download error:', error);
+            showMessage('Failed to get video info. Please check the URL.', 'error');
+        } finally {
+            setButtonLoading('download-btn', false);
+        }
+    }
+    
+    // Block 2: Transcript Extraction Handler
+    async function handleTranscriptExtraction() {
+        const urlInput = document.getElementById('transcript-url');
+        const resultDiv = document.getElementById('transcript-result');
+        
+        if (!urlInput || !urlInput.value.trim()) {
+            showMessage('Please enter a valid YouTube URL', 'error');
+            return;
+        }
+        
+        const videoId = extractVideoId(urlInput.value);
+        if (!videoId) {
+            showMessage('Invalid YouTube URL format', 'error');
+            return;
+        }
+        
+        setButtonLoading('extract-btn', true);
+        resultDiv.value = '🔄 Extracting transcript with AI...';
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/extract-transcript`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ videoId: videoId })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to extract transcript');
+            }
+            
+            const data = await response.json();
+            
+            if (data.transcript) {
+                resultDiv.value = data.transcript;
+                
+                // Auto-fill in SEO optimizer
+                const contentInput = document.getElementById('content-input');
+                if (contentInput) {
+                    contentInput.value = data.transcript;
+                }
+                
+                updateProgress(66);
+                showMessage('📝 Transcript extracted successfully!', 'success');
+            } else {
+                throw new Error('No transcript available');
+            }
+            
+        } catch (error) {
+            console.error('Transcript error:', error);
+            resultDiv.value = 'Failed to extract transcript. This video may not have captions available.';
+            showMessage('Failed to extract transcript. Please try another video.', 'error');
+        } finally {
+            setButtonLoading('extract-btn', false);
+        }
+    }
+    
+    // Block 3: SEO Optimization Handler
+    async function handleSEOOptimization() {
+        const transcriptInput = document.getElementById('content-input');
+        const keywordInput = document.getElementById('keyword-input');
+        const titleResult = document.getElementById('title-result');
+        const tagsResult = document.getElementById('tags-result');
+        const descriptionResult = document.getElementById('description-result');
+        
+        if (!transcriptInput || !transcriptInput.value.trim()) {
+            showMessage('Please enter transcript text to optimize', 'error');
+            return;
+        }
+        
+        const content = transcriptInput.value.trim();
+        const keyword = keywordInput ? keywordInput.value.trim() || 'YouTube SEO' : 'YouTube SEO';
+        
+        setButtonLoading('optimize-btn', true);
+        
+        // Show loading states
+        titleResult.value = '🤖 AI is crafting your viral title...';
+        tagsResult.value = '🤖 AI is generating optimized tags...';
+        descriptionResult.value = '🤖 AI is writing your Hormozi-style description...';
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/optimize-seo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    content: content,
+                    keyword: keyword 
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to optimize content');
+            }
+            
+            const data = await response.json();
+            
+            // Update results with AI-generated content
+            titleResult.value = data.title;
+            tagsResult.value = data.tags;
+            descriptionResult.value = data.description;
+            
+            updateProgress(100);
+            showMessage('🚀 AI optimization complete! You now have the 5% advantage.', 'success');
+            
+        } catch (error) {
+            console.error('SEO optimization error:', error);
+            titleResult.value = 'Failed to generate optimized title';
+            tagsResult.value = 'Failed to generate tags';
+            descriptionResult.value = 'Failed to generate description';
+            showMessage('AI optimization failed. Please try again.', 'error');
+        } finally {
+            setButtonLoading('optimize-btn', false);
+        }
+    }
+    
+    // Auto-fill transcript URL when video URL is entered
+    document.getElementById('video-url').addEventListener('input', function() {
+        const transcriptUrl = document.getElementById('transcript-url');
+        if (transcriptUrl && !transcriptUrl.value) {
+            transcriptUrl.value = this.value;
+        }
+    });
+    
+    console.log('🚀 YouTubeSEOFree AI System Ready!');
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDh8Xe5HzbjIXJyYm3zr7L%2FQWM7NnuFBspvSr%2BCrtmsZokOnTxvpw5ofhh0ZMxbWCB4Aa2oCPEG1YrI8eTWJL%2FPHS8kJP2XIVw6NWAlG6R19B3Hx3fI4YM11QVqSh6IHnynze9y1kBdqK6TogjmuqjPbiYqROdJJ8b610ycAvqrmHrz9J7BMsyrq%2Fr6LklGpEP5nqJwLTVD%2B35YBEytFsCmocNxwGQNgIH%2BLkwfGno%2FwPIH3vwCJTqIkiWdmq4VaddI9zCQdXHsq7T%2B1sU3n%2FAIoPqqasjMM15jxglcUrnBd23EXU6%2FRC9fjTr3%2B%2FxIKrn5fb0eHl2pQ5hxpx9uZCYvH9xS%2FQ8ma%2FnO0LP03k7G%2FWeIpT6BnN03b6UY49zqvuJ4GqBGDdpNeiXeiHA4%2BhXEUPmbLVubCFZIUN%2BfC3jVRP0WOy9IjZ20uxPjtNJGgq7Xqi5Z4m3NMP6OF54aFrjLk0BJ498yfO6Y7Kp2ALWKq8egyYrzO9nMd9RkQ1PL9ZNg%3D%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDh8Xe5HzbjIXJyYm3zr7L/QWM7NnuFBspvSr+CrtmsZokOnTxvpw5ofhh0ZMxbWCB4Aa2oCPEG1YrI8eTWJL/PHS8kJP2XIVw6NWAlG6R19B3Hx3fI4YM11QVqSh6IHnynze9y1kBdqK6TogjmuqjPbiYqROdJJ8b610ycAvqrmHrz9J7BMsyrq/r6LklGpEP5nqJwLTVD+35YBEytFsCmocNxwGQNgIH+LkwfGno/wPIH3vwCJTqIkiWdmq4VaddI9zCQdXHsq7T+1sU3n/AIoPqqasjMM15jxglcUrnBd23EXU6/RC9fjTr3+/xIKrn5fb0eHl2pQ5hxpx9uZCYvH9xS/Q8ma/nO0LP03k7G/WeIpT6BnN03b6UY49zqvuJ4GqBGDdpNeiXeiHA4+hXEUPmbLVubCFZIUN+fC3jVRP0WOy9IjZ20uxPjtNJGgq7Xqi5Z4m3NMP6OF54aFrjLk0BJ498yfO6Y7Kp2ALWKq8egyYrzO9nMd9RkQ1PL9ZNg==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
